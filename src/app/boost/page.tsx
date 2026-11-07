@@ -62,6 +62,26 @@ export default function BoostPage() {
               <p className="text-[11px] text-amber-400 font-mono">/boost</p>
             </div>
           </Link>
+          <nav className="hidden sm:flex items-center gap-2">
+            <Link
+              href="/goal"
+              className="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-300 hover:text-emerald-400 hover:bg-slate-800 transition"
+            >
+              /goal
+            </Link>
+            <Link
+              href="/teamwork"
+              className="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-300 hover:text-cyan-400 hover:bg-slate-800 transition"
+            >
+              /teamwork
+            </Link>
+            <Link
+              href="/boost"
+              className="px-3 py-1.5 rounded-lg text-xs font-semibold text-amber-400 bg-amber-500/10 border border-amber-500/30"
+            >
+              /boost
+            </Link>
+          </nav>
           <div className="flex items-center gap-3">
             <Link
               href="/dashboard"
@@ -133,11 +153,25 @@ export default function BoostPage() {
           </div>
         </div>
 
-        <div className="flex flex-col items-center gap-2">
+        <div className="flex flex-col items-center gap-3">
           <ChameleonMascot size={100} state={mascotState} />
           <p className="text-[11px] text-slate-500 font-mono">
             Kameleon Liderzy Jutra czuwa nad energią Twojego zespołu!
           </p>
+          <div className="flex flex-wrap items-center gap-3 pt-2">
+            <Link
+              href="/goal"
+              className="text-xs px-3 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-emerald-400 hover:border-emerald-500/50 transition"
+            >
+              Misja i cel: /goal
+            </Link>
+            <Link
+              href="/teamwork"
+              className="text-xs px-3 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-cyan-400 hover:border-cyan-500/50 transition"
+            >
+              Metodyka zespołu: /teamwork
+            </Link>
+          </div>
         </div>
       </main>
     </div>

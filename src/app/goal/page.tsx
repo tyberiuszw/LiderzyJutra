@@ -11,6 +11,8 @@ import {
   Sparkles,
   Rocket,
   CheckCircle2,
+  Users,
+  Flame,
 } from "lucide-react";
 
 export default function GoalPage() {
@@ -49,6 +51,26 @@ export default function GoalPage() {
               <p className="text-[11px] text-emerald-400 font-mono">/goal</p>
             </div>
           </Link>
+          <nav className="hidden sm:flex items-center gap-2">
+            <Link
+              href="/goal"
+              className="px-3 py-1.5 rounded-lg text-xs font-semibold text-emerald-400 bg-emerald-500/10 border border-emerald-500/30"
+            >
+              /goal
+            </Link>
+            <Link
+              href="/teamwork"
+              className="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-300 hover:text-cyan-400 hover:bg-slate-800 transition"
+            >
+              /teamwork
+            </Link>
+            <Link
+              href="/boost"
+              className="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-300 hover:text-amber-400 hover:bg-slate-800 transition"
+            >
+              /boost
+            </Link>
+          </nav>
           <div className="flex items-center gap-3">
             <Link
               href="/dashboard"
@@ -90,6 +112,68 @@ export default function GoalPage() {
               <p className="text-xs text-slate-400 leading-relaxed">{g.desc}</p>
             </div>
           ))}
+        </div>
+
+        {/* Interactive Showcase: You can use /teamwork /boost */}
+        <div className="space-y-6">
+          <div className="text-center space-y-2">
+            <h2 className="text-xl sm:text-2xl font-bold text-white">
+              Narzędzia Zespołowe: Skorzystaj z /teamwork oraz /boost
+            </h2>
+            <p className="text-xs text-slate-400 max-w-xl mx-auto">
+              Realizuj cele platformy w praktyce — wybierz metodykę warsztatową lub szybki booster energii przed spotkaniem.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="p-6 rounded-3xl bg-slate-900 border border-slate-800 hover:border-cyan-500/50 transition shadow-xl flex flex-col justify-between space-y-4">
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="p-2.5 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 w-fit">
+                    <Users className="w-5 h-5" />
+                  </div>
+                  <span className="text-[10px] font-bold font-mono px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
+                    /teamwork
+                  </span>
+                </div>
+                <h3 className="text-base font-bold text-white">Metodyka Teamwork & 10 Modułów Gier</h3>
+                <p className="text-xs text-slate-400 leading-relaxed">
+                  Dowiedz się, jak Survival Challenge, Zin Obelisk, Dracula Negotiator oraz Pictionary przełamują silosy i uczą podejmowania decyzji w grupie.
+                </p>
+              </div>
+              <Link
+                href="/teamwork"
+                className="w-full py-2.5 px-4 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs transition flex items-center justify-center gap-2"
+              >
+                <span>Przejdź do /teamwork</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+
+            <div className="p-6 rounded-3xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition shadow-xl flex flex-col justify-between space-y-4">
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400 w-fit">
+                    <Flame className="w-5 h-5" />
+                  </div>
+                  <span className="text-[10px] font-bold font-mono px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                    /boost
+                  </span>
+                </div>
+                <h3 className="text-base font-bold text-white">Team Energy Booster (Energizery)</h3>
+                <p className="text-xs text-slate-400 leading-relaxed">
+                  Szybki 3-minutowy rozgrzewacz przed spotkaniem! Losuj dylematy, pytania o supermoce, wyzwania kreatywne i lodołamacze.
+                </p>
+              </div>
+              <Link
+                href="/boost"
+                className="w-full py-2.5 px-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition flex items-center justify-center gap-2"
+              >
+                <span>Uruchom /boost</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+          </div>
         </div>
 
         {/* Mascot Meaning Section */}

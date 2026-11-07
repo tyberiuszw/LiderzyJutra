@@ -51,6 +51,24 @@ export default function Home() {
         </div>
         <div className="flex items-center gap-3">
           <Link
+            href="/goal"
+            className="hidden md:flex items-center text-xs font-semibold text-ink-soft hover:text-ink transition-colors font-mono"
+          >
+            /goal
+          </Link>
+          <Link
+            href="/teamwork"
+            className="hidden md:flex items-center text-xs font-semibold text-ink-soft hover:text-ink transition-colors font-mono"
+          >
+            /teamwork
+          </Link>
+          <Link
+            href="/boost"
+            className="hidden md:flex items-center text-xs font-semibold text-ink-soft hover:text-ink transition-colors font-mono"
+          >
+            /boost
+          </Link>
+          <Link
             href="/dashboard"
             className="hidden sm:flex items-center gap-1.5 text-xs font-semibold text-ink-soft hover:text-ink transition-colors"
           >
@@ -146,6 +164,24 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <footer className="flex flex-wrap items-center justify-between border-t border-line pt-6 text-xs text-ink-soft">
+        <p>© 2026 Liderzy Jutra. Budujemy Zespoły Przyszłości.</p>
+        <div className="flex items-center gap-4">
+          <Link href="/goal" className="hover:text-ink transition-colors font-mono">
+            /goal
+          </Link>
+          <Link href="/teamwork" className="hover:text-ink transition-colors font-mono">
+            /teamwork
+          </Link>
+          <Link href="/boost" className="hover:text-ink transition-colors font-mono">
+            /boost
+          </Link>
+          <Link href="/dashboard" className="hover:text-ink transition-colors">
+            {t("nav.dashboard")}
+          </Link>
+        </div>
+      </footer>
     </main>
   );
 }

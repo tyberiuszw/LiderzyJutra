@@ -53,6 +53,26 @@ export default function TeamworkPage() {
               <p className="text-[11px] text-cyan-400 font-mono">/teamwork</p>
             </div>
           </Link>
+          <nav className="hidden sm:flex items-center gap-2">
+            <Link
+              href="/goal"
+              className="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-300 hover:text-emerald-400 hover:bg-slate-800 transition"
+            >
+              /goal
+            </Link>
+            <Link
+              href="/teamwork"
+              className="px-3 py-1.5 rounded-lg text-xs font-semibold text-cyan-400 bg-cyan-500/10 border border-cyan-500/30"
+            >
+              /teamwork
+            </Link>
+            <Link
+              href="/boost"
+              className="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-300 hover:text-amber-400 hover:bg-slate-800 transition"
+            >
+              /boost
+            </Link>
+          </nav>
           <div className="flex items-center gap-3">
             <Link
               href="/dashboard"
@@ -127,12 +147,24 @@ export default function TeamworkPage() {
               </p>
             </div>
           </div>
-          <div className="pt-2 flex justify-center">
+          <div className="pt-2 flex flex-wrap justify-center gap-4">
             <Link
               href="/dashboard"
               className="px-6 py-3 rounded-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs transition shadow-lg shadow-cyan-500/20"
             >
               Uruchom sesję warsztatową
+            </Link>
+            <Link
+              href="/boost"
+              className="px-6 py-3 rounded-full bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 font-bold text-xs transition"
+            >
+              Losuj energizer na /boost
+            </Link>
+            <Link
+              href="/goal"
+              className="px-6 py-3 rounded-full bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 font-bold text-xs transition"
+            >
+              Poznaj misję na /goal
             </Link>
           </div>
         </div>

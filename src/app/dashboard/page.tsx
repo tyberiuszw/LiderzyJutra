@@ -471,6 +471,27 @@ export default function DashboardPage() {
                 {user.organization.name}
               </span>
             </div>
+
+            <div className="hidden lg:flex items-center gap-1.5 ml-2">
+              <Link
+                href="/goal"
+                className="px-2.5 py-1 rounded-lg text-xs font-semibold text-ink-soft hover:text-emerald-500 hover:bg-surface transition font-mono"
+              >
+                /goal
+              </Link>
+              <Link
+                href="/teamwork"
+                className="px-2.5 py-1 rounded-lg text-xs font-semibold text-ink-soft hover:text-cyan-500 hover:bg-surface transition font-mono"
+              >
+                /teamwork
+              </Link>
+              <Link
+                href="/boost"
+                className="px-2.5 py-1 rounded-lg text-xs font-semibold text-ink-soft hover:text-amber-500 hover:bg-surface transition font-mono"
+              >
+                /boost
+              </Link>
+            </div>
           </div>
 
           <div className="flex items-center gap-4">
