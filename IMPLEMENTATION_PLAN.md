@@ -257,6 +257,7 @@ In multiplayer sessions, multiple players with distinct chameleon colors interac
 1. **Client Chrome (Global)**: The local player's chameleon color configures `:root` CSS variables, styling their personal buttons, navigation bars, and inputs.
 2. **Multiplayer Scoped Cards**: Remote player badges, cursors, and scoreboard entries use component-scoped inline CSS variables:
    ```tsx
+   /* {% raw %} */
    <div 
      className="player-scoreboard-card" 
      style={{
@@ -269,6 +270,7 @@ In multiplayer sessions, multiple players with distinct chameleon colors interac
      <span className="player-name">{player.name}</span>
      <span className="player-score" style={{ color: 'var(--player-primary)' }}>{player.score}</span>
    </div>
+   /* {% endraw %} */
    ```
 This architecture guarantees that 16 simultaneous players each see their personalized UI chrome while viewing other players' accurate chameleon colors without cross-talk or UI flickering.
 
