@@ -33,26 +33,47 @@ console.log(`> [TeamBonding] Starting unified server on port ${port} (mode: ${de
 const app = next({ dev, hostname, port });
 const handle = app.getRequestHandler();
 
+let isNextReady = false;
+
+// Create the native HTTP server immediately
+const httpServer = createServer((req, res) => {
+  // Let Socket.io handle /socket.io requests via its attached listener
+  if (req.url?.startsWith("/socket.io")) {
+    return;
+  }
+
+  // If Next.js is still preparing, answer healthcheck pings immediately so Railway doesn't return 502
+  if (!isNextReady) {
+    if (req.url === "/" || req.url === "/health" || req.url === "/healthz") {
+      res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+      res.end(`<!DOCTYPE html><html><head><meta http-equiv="refresh" content="3"><title>Uruchamianie Liderzy Jutra...</title></head><body style="font-family:sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;background:#0b0f19;color:#06b6d4;text-align:center;"><div><h1>🚀 Trwa uruchamianie serwera Liderzy Jutra...</h1><p style="color:#94a3b8;">Przygotowywanie gier i bazy danych (odświeżam za 3 sekundy)...</p></div></body></html>`);
+      return;
+    }
+    res.writeHead(503, { "Content-Type": "text/plain; charset=utf-8" });
+    res.end("Serwer się inicjalizuje...");
+    return;
+  }
+
+  const parsedUrl = parse(req.url!, true);
+  handle(req, res, parsedUrl);
+});
+
+// Attach Socket.io to the HTTP server
+initSocketServer(httpServer);
+
+// Listen immediately on 0.0.0.0:${port} so cloud healthchecks pass instantly
+httpServer.listen(port, "0.0.0.0", () => {
+  console.log(`> [TeamBonding Liderzy Jutra] Unified server listening immediately on http://0.0.0.0:${port}`);
+});
+
+// Prepare Next.js in background
 app
   .prepare()
   .then(() => {
-    const httpServer = createServer((req, res) => {
-      // Let Socket.io handle /socket.io requests via its attached listener
-      if (req.url?.startsWith("/socket.io")) {
-        return;
-      }
-      const parsedUrl = parse(req.url!, true);
-      handle(req, res, parsedUrl);
-    });
-
-    // Attach Socket.io to the exact same HTTP server instance
-    initSocketServer(httpServer);
-
-    httpServer.listen(port, "0.0.0.0", () => {
-      console.log(`> [TeamBonding Liderzy Jutra] Unified server ready on http://0.0.0.0:${port}`);
-    });
+    isNextReady = true;
+    console.log(`> [TeamBonding Liderzy Jutra] Next.js ready! App is fully operational on http://0.0.0.0:${port}`);
   })
   .catch((err) => {
-    console.error("Failed to start unified server:", err);
+    console.error("Failed to prepare Next.js:", err);
     process.exit(1);
   });
