@@ -192,8 +192,14 @@ export class UnifiedRoomSession {
   }
 
   public createBreakoutGroups(count: number, shuffle: boolean = true): void {
+    const playerCount = Object.keys(this.players).length;
+    const safeCount = Math.max(
+      1,
+      Math.min(20, Number.isFinite(count) && count > 0 ? Math.floor(count) : Math.max(2, Math.round(playerCount / 4) || 2))
+    );
+
     const groups: Record<string, BreakoutGroup> = {};
-    for (let i = 1; i <= count; i++) {
+    for (let i = 1; i <= safeCount; i++) {
       const gid = `group-${i}`;
       groups[gid] = {
         id: gid,
@@ -209,7 +215,7 @@ export class UnifiedRoomSession {
         [pIds[i], pIds[j]] = [pIds[j], pIds[i]];
       }
       pIds.forEach((pid, idx) => {
-        const targetGroupIndex = (idx % count) + 1;
+        const targetGroupIndex = (idx % safeCount) + 1;
         const gid = `group-${targetGroupIndex}`;
         groups[gid].memberIds.push(pid);
         if (this.players[pid]) {

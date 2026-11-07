@@ -127,20 +127,27 @@ export function CollaborativeJamboard({
   };
 
   // Canvas Drawing Handlers
+  const getCanvasCoordinates = (e: React.MouseEvent<HTMLCanvasElement>) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return { x: 0, y: 0 };
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = rect.width > 0 ? canvas.width / rect.width : 1;
+    const scaleY = rect.height > 0 ? canvas.height / rect.height : 1;
+    const x = Math.round((e.clientX - rect.left) * scaleX);
+    const y = Math.round((e.clientY - rect.top) * scaleY);
+    return { x, y };
+  };
+
   const handleCanvasMouseDown = (e: React.MouseEvent<HTMLCanvasElement>) => {
     if (activeTool !== "pen" && activeTool !== "eraser") return;
     setIsDrawing(true);
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
+    const { x, y } = getCanvasCoordinates(e);
     currentStrokePoints.current = [{ x, y }];
   };
 
   const handleCanvasMouseMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
     if (!isDrawing) return;
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
+    const { x, y } = getCanvasCoordinates(e);
     currentStrokePoints.current.push({ x, y });
 
     // Live local preview
@@ -153,7 +160,7 @@ export function CollaborativeJamboard({
     if (pts.length >= 2) {
       ctx.beginPath();
       ctx.strokeStyle = activeTool === "eraser" ? "#020617" : penColor;
-      ctx.lineWidth = activeTool === "eraser" ? 20 : penSize;
+      ctx.lineWidth = activeTool === "eraser" ? 24 : penSize;
       ctx.lineCap = "round";
       ctx.lineJoin = "round";
       ctx.moveTo(pts[pts.length - 2].x, pts[pts.length - 2].y);

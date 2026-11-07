@@ -404,6 +404,17 @@ export class SurvivalChallengeSession {
       bracket: teamBracket,
     };
 
+    // Also calculate for each specific breakout group that submitted
+    for (const [groupId, groupRanking] of Object.entries(this.state.teamRankings)) {
+      const gScore = calculateSurvivalDifference(groupRanking, this.state.items);
+      this.state.scores[groupId] = {
+        individualScore: indAvg,
+        teamScore: gScore,
+        synergyGain: indAvg - gScore,
+        bracket: getSurvivalBracket(gScore),
+      };
+    }
+
     // Calculate for each player individually
     for (const [playerId, score] of Object.entries(individualScores)) {
       this.state.scores[playerId] = {

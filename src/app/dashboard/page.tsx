@@ -143,6 +143,11 @@ export default function DashboardPage() {
   const [adminOrgs, setAdminOrgs] = useState<AdminOrgData[]>([]);
   const [adminNewOrgName, setAdminNewOrgName] = useState("");
   const [adminCreatingOrg, setAdminCreatingOrg] = useState(false);
+  const [assignUserEmail, setAssignUserEmail] = useState("");
+  const [assignOrgId, setAssignOrgId] = useState("");
+  const [assignRole, setAssignRole] = useState("TEAM_MEMBER");
+  const [assigningUser, setAssigningUser] = useState(false);
+  const [assignMsg, setAssignMsg] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
   // Create team state
   const [newTeamName, setNewTeamName] = useState("");
@@ -303,6 +308,37 @@ export default function DashboardPage() {
       console.error("Admin create org error:", err);
     } finally {
       setAdminCreatingOrg(false);
+    }
+  };
+
+  const handleAdminAssignUser = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!assignUserEmail.trim() || !assignOrgId) return;
+    setAssigningUser(true);
+    setAssignMsg(null);
+    try {
+      const res = await fetch("/api/admin/orgs", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userEmail: assignUserEmail.trim(),
+          organizationId: assignOrgId,
+          role: assignRole,
+        }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setAssignMsg({ type: "success", text: data.message || "Przypisano użytkownika pomyślnie." });
+        setAssignUserEmail("");
+        loadData();
+      } else {
+        setAssignMsg({ type: "error", text: data.error || "Wystąpił błąd podczas przypisywania." });
+      }
+    } catch (err) {
+      console.error("Admin assign user error:", err);
+      setAssignMsg({ type: "error", text: "Błąd połączenia z serwerem." });
+    } finally {
+      setAssigningUser(false);
     }
   };
 
@@ -722,16 +758,22 @@ export default function DashboardPage() {
                   </select>
                 </div>
 
-                <button
-                  type="button"
-                  disabled={creatingRoom}
-                  onClick={handleCreateRoom}
-                  className="w-full sm:w-auto flex items-center justify-center gap-2 rounded-full bg-cham px-6 py-3 font-semibold text-xs text-cham-contrast transition hover:brightness-105 disabled:opacity-50 cursor-pointer"
-                  style={{ boxShadow: "0 4px 14px var(--chameleon-primary-glow)" }}
-                >
-                  <Play size={16} />
-                  <span>{creatingRoom ? t("dashboard.launchingRoom") : t("dashboard.launchRoomSubmit")}</span>
-                </button>
+                {user.status === "PENDING_APPROVAL" || user.organization.status === "PENDING_APPROVAL" ? (
+                  <div className="flex items-center gap-2 text-xs text-amber-400 bg-amber-500/10 px-4 py-2.5 rounded-2xl border border-amber-500/20">
+                    <span>Oczekiwanie na zatwierdzenie konta lub organizacji</span>
+                  </div>
+                ) : (
+                  <button
+                    type="button"
+                    disabled={creatingRoom}
+                    onClick={handleCreateRoom}
+                    className="w-full sm:w-auto flex items-center justify-center gap-2 rounded-full bg-cham px-6 py-3 font-semibold text-xs text-cham-contrast transition hover:brightness-105 disabled:opacity-50 cursor-pointer"
+                    style={{ boxShadow: "0 4px 14px var(--chameleon-primary-glow)" }}
+                  >
+                    <Play size={16} />
+                    <span>{creatingRoom ? t("dashboard.launchingRoom") : t("dashboard.launchRoomSubmit")}</span>
+                  </button>
+                )}
               </div>
 
               {createdRoomCode && (
@@ -1214,6 +1256,73 @@ export default function DashboardPage() {
                 >
                   {adminCreatingOrg ? "Tworzenie..." : "Utwórz organizację"}
                 </button>
+              </form>
+            </div>
+
+            {/* Directly Assign User to Organization (Super Admin) */}
+            <div className="rounded-3xl border border-line bg-card p-6 shadow-[var(--shadow-md)]">
+              <h2 className="text-lg font-bold flex items-center gap-2 mb-2">
+                <Users className="text-cham-text" size={20} />
+                Przypisz użytkownika do organizacji (Super Admin)
+              </h2>
+              <p className="text-xs text-ink-soft mb-4">
+                Możesz bezpośrednio przypisać istniejącego użytkownika do dowolnej organizacji, nadać rolę i aktywować jego konto.
+              </p>
+
+              <form onSubmit={handleAdminAssignUser} className="space-y-3">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <input
+                    type="email"
+                    required
+                    value={assignUserEmail}
+                    onChange={(e) => setAssignUserEmail(e.target.value)}
+                    placeholder="Adres e-mail użytkownika..."
+                    className="rounded-2xl border border-line bg-surface px-4 py-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-cham"
+                  />
+                  <select
+                    required
+                    value={assignOrgId}
+                    onChange={(e) => setAssignOrgId(e.target.value)}
+                    className="rounded-2xl border border-line bg-surface px-4 py-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-cham"
+                  >
+                    <option value="">Wybierz organizację...</option>
+                    {adminOrgs.map((org) => (
+                      <option key={org.id} value={org.id}>
+                        {org.name} ({org.slug})
+                      </option>
+                    ))}
+                  </select>
+                  <select
+                    value={assignRole}
+                    onChange={(e) => setAssignRole(e.target.value)}
+                    className="rounded-2xl border border-line bg-surface px-4 py-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-cham"
+                  >
+                    <option value="ORG_ADMIN">Administrator Organizacji</option>
+                    <option value="TEAM_FACILITATOR">Facylitator Zespołu</option>
+                    <option value="TEAM_MEMBER">Członek Zespołu</option>
+                  </select>
+                </div>
+
+                <div className="flex items-center justify-between pt-1">
+                  {assignMsg && (
+                    <span
+                      className={`text-xs font-semibold ${
+                        assignMsg.type === "success" ? "text-emerald-400" : "text-rose-400"
+                      }`}
+                    >
+                      {assignMsg.text}
+                    </span>
+                  )}
+                  <div className="ml-auto">
+                    <button
+                      type="submit"
+                      disabled={assigningUser || !assignUserEmail.trim() || !assignOrgId}
+                      className="px-5 py-2.5 rounded-2xl bg-cham text-cham-contrast font-bold text-xs transition hover:brightness-105 disabled:opacity-50 cursor-pointer"
+                    >
+                      {assigningUser ? "Przypisywanie..." : "Przypisz do organizacji"}
+                    </button>
+                  </div>
+                </div>
               </form>
             </div>
 

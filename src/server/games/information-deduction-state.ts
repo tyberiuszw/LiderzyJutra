@@ -94,7 +94,7 @@ export const TECHSTREAM_CLUES: string[] = [
 ];
 
 // -------------------------------------------------------------
-// 4. THE MOVIE MURDER MYSTERY (10 Characters & Clues)
+// 4. THE MOVIE MURDER MYSTERY (10 Characters & 18 Scavenged Clues)
 // -------------------------------------------------------------
 export const MOVIE_MYSTERY_ROLES: CharacterRole[] = [
   {
@@ -145,6 +145,59 @@ export const MOVIE_MYSTERY_ROLES: CharacterRole[] = [
     secretObjective: "Zabić ofiarę przed podpisaniem 5-letniego kontraktu gwiazdorskiego!",
     actionClue: "Ukrył fiolkę z trucizną w futerale na rekwizyty i podmienił kieliszek szampana.",
   },
+  {
+    id: "screenwriter",
+    name: "Penny Script",
+    occupation: "Scenarzystka & Kierownik Planu",
+    bio: "Autorka fabuły, która wie wszystko o intrygach bohaterów i pilnuje spójności scen.",
+    secretObjective: "Ukryć fakt, że ofiara przepisała zakończenie filmu na swoją korzyść.",
+    actionClue: "Zauważyła notatkę z groźbą włożoną do egzemplarza scenariusza ofiary o 20:50.",
+  },
+  {
+    id: "costume_designer",
+    name: "Bella Donna",
+    occupation: "Projektantka Kostiumów & Charakteryzatorka",
+    bio: "Mistrzyni detali, która ubiera obsadę i zna każdą plamę oraz zapach w garderobach.",
+    secretObjective: "Ukryć kradzież drogocennej biżuterii z garderoby głównej aktorki.",
+    actionClue: "Widziała Juliana Crossa nerwowo wycierającego ręce chusteczką przed sceną toastu.",
+  },
+  {
+    id: "sound_engineer",
+    name: "Oliver Sound",
+    occupation: "Główny Dźwiękowiec & Operator Tyczki",
+    bio: "Nosi słuchawki przez cały dzień i słyszy nawet najcichsze szepty na planie.",
+    secretObjective: "Zataić nagranie kłótni ofiary z zabójcą przed rozpoczęciem zdjęć.",
+    actionClue: "Jego mikrofon kierunkowy zarejestrował szept: 'Ten toast będzie twoim pożegnaniem'.",
+  },
+  {
+    id: "publicist",
+    name: "Tabitha Snap",
+    occupation: "Studio Publicist & Paparazzi",
+    bio: "Dziennikarka żądna sensacji, która zrobi zdjęcie przez każdą dziurkę od klucza.",
+    secretObjective: "Sprzedać kompromitujące zdjęcia obsady tabloidom za 50 000 dolarów.",
+    actionClue: "Zrobiła zdjęcie cieniowi w garniturze majstrującemu przy kieliszkach szampana o 21:05.",
+  },
+];
+
+export const MOVIE_MYSTERY_CLUES: string[] = [
+  "Rozbity kieliszek z kryształu ze śladami białego osadu w garderobie ofiary.",
+  "Buteleczka z trucizną (cyjanek potasu) zdartą etykietą znaleziona za kurtyną rekwizytów.",
+  "Kopia zaktualizowanego testamentu ofiary przepisująca prawa autorskie na nowe studio.",
+  "Zerwana spinka do mankietu ze srebra z monogramem 'J.C.' znaleziona obok stołu cateringowego.",
+  "Notatka ze scenariusza z dopiskiem czerwonym długopisem: 'Ta scena będzie twoją ostatnią'.",
+  "Zeznanie dźwiękowca: mikrofon kierunkowy zarejestrował szept: 'Ten toast będzie twoim pożegnaniem'.",
+  "Rejestr magazynu broni filmowej: rekwizytowy rewolwer był nienaładowany, więc zbrodnia musiała nastąpić przez truciznę.",
+  "Rachunek z apteki za substancję toksyczną wystawiony na nazwisko powiązane z Julianem Crossem.",
+  "Zeznanie charakteryzatorki: Julian Cross nerwowo wycierał dłonie przed sceną bankietu.",
+  "Ślad szminki w odcieniu 'Burgund Diva' na serwetce w koszu w gabinecie reżysera.",
+  "Bilet lotniczy w jedną stronę do Ameryki Południowej zakupiony na godzinę 23:45.",
+  "Polisa ubezpieczeniowa na 5 milionów dolarów na wypadek wstrzymania zdjęć przez śmierć gwiazdy.",
+  "Zamazane zdjęcie z aparatu paparazzi pokazujące postać manipulującą przy karafce z szampanem.",
+  "E-mail z groźbą wysłany z anonimowego konta: 'Jeśli podpiszesz kontrakt, zniszczę cię'.",
+  "Grafik obsady: w razie śmierci ofiary jedynym uprawnionym dublerem do roli życia był Julian Cross.",
+  "Zeznanie producenta: ofiara odmówiła oddania roli Julianowi, nazywając go 'beztalenciem'.",
+  "Odcisk palca na dnie zatrutej karafki szampana należący do Juliana Crossa.",
+  "Pusty flakonik po cyjanku w kieszeni marynarki znaleziony w garderobie Juliana Crossa.",
 ];
 
 export class InformationDeductionSession {
@@ -316,12 +369,45 @@ export class InformationDeductionSession {
           assignedPlayerId: targetPlayerId,
         });
       });
+    } else if (this.state.gameId === "DRACULA") {
+      // Partition players into Team 1 and Team 2 fact sheet channels
+      this.state.clueCards = {};
+      playerIds.forEach((pid, idx) => {
+        const teamKey = idx % 2 === 0 ? "team-1" : "team-2";
+        const facts = teamKey === "team-1" ? DRACULA_FACTS_TEAM_1 : DRACULA_FACTS_TEAM_2;
+        this.state.clueCards[pid] = facts.map((f, i) => ({
+          id: `drac_${teamKey}_${i + 1}`,
+          text: f,
+          assignedPlayerId: pid,
+        }));
+      });
     } else if (this.state.gameId === "MOVIE_MYSTERY") {
-      // Assign roles to players
+      // Assign roles to players (up to 10 roles)
       this.state.roles = {};
       playerIds.forEach((pid, index) => {
         const role = MOVIE_MYSTERY_ROLES[index % MOVIE_MYSTERY_ROLES.length];
         this.state.roles![pid] = { ...role, assignedPlayerId: pid };
+      });
+
+      // Distribute the 18 scavenged clues among players
+      const clues = [...MOVIE_MYSTERY_CLUES];
+      // Fisher-Yates shuffle
+      for (let i = clues.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [clues[i], clues[j]] = [clues[j], clues[i]];
+      }
+
+      this.state.clueCards = {};
+      playerIds.forEach((pid) => {
+        this.state.clueCards[pid] = [];
+      });
+      clues.forEach((clueText, index) => {
+        const targetPlayerId = playerIds[index % playerIds.length];
+        this.state.clueCards[targetPlayerId].push({
+          id: `movie_${index + 1}`,
+          text: clueText,
+          assignedPlayerId: targetPlayerId,
+        });
       });
     }
 
@@ -345,7 +431,29 @@ export class InformationDeductionSession {
     this.state.submittedSolution = solution;
     const cleanSub = solution.toLowerCase().trim();
     const cleanSol = this.state.officialSolution.toLowerCase().trim();
-    const isCorrect = cleanSub.includes(cleanSol) || cleanSol.includes(cleanSub);
+
+    // Guard against empty / trivial / single-character strings
+    if (cleanSub.length < 3) {
+      this.state.isSolutionCorrect = false;
+      this.state.phase = "SOLUTION_REVEAL";
+      this.callbacks.onSolutionChecked?.(false, this.state.officialSolution);
+      this.callbacks.onStateUpdate?.(this.state);
+      return false;
+    }
+
+    let isCorrect = false;
+    if (this.state.gameId === "ZIN_OBELISK") {
+      isCorrect = cleanSub.includes("neptiminus");
+    } else if (this.state.gameId === "DRACULA") {
+      isCorrect = cleanSub.includes("sobota") || cleanSub.includes("saturday");
+    } else if (this.state.gameId === "MURDER_TECHSTREAM") {
+      isCorrect = cleanSub.includes("hartley") || cleanSub.includes("bob");
+    } else if (this.state.gameId === "MOVIE_MYSTERY") {
+      isCorrect = cleanSub.includes("julian") || cleanSub.includes("cross") || cleanSub.includes("drugoplanow");
+    } else {
+      isCorrect = cleanSub.includes(cleanSol) || (cleanSol.includes(cleanSub) && cleanSub.length >= 5);
+    }
+
     this.state.isSolutionCorrect = isCorrect;
     this.state.phase = "SOLUTION_REVEAL";
 

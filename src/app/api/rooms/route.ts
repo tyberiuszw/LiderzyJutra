@@ -56,6 +56,20 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Wymagane logowanie." }, { status: 401 });
     }
 
+    // Verify user and organization are approved (Superadmin is exempt)
+    if (session.role !== "SUPERADMIN") {
+      const user = await prismaUnscoped.user.findUnique({
+        where: { id: session.sub },
+        include: { organization: true },
+      });
+      if (!user || user.status !== "ACTIVE" || user.organization?.status !== "APPROVED") {
+        return NextResponse.json(
+          { error: "Tylko zatwierdzeni członkowie organizacji mogą tworzyć pokoje gier." },
+          { status: 403 }
+        );
+      }
+    }
+
     const body = await req.json();
     const { gameType = "RYSOWANIE", teamId, settings = {} } = body;
 

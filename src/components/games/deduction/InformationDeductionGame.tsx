@@ -32,6 +32,7 @@ interface InformationDeductionGameProps {
 
 export function InformationDeductionGame({
   state,
+  players,
   currentUserId,
   isHost,
   onSelectGame,
@@ -47,6 +48,7 @@ export function InformationDeductionGame({
   const myClueCards = state.clueCards[currentUserId] || [];
   const myRole = state.roles?.[currentUserId];
   const isNegotiator = state.negotiators?.includes(currentUserId);
+  const [selectedDraculaTeam, setSelectedDraculaTeam] = useState<"team-1" | "team-2">("team-1");
 
   const handleSolutionSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -191,40 +193,81 @@ export function InformationDeductionGame({
           {/* Dracula Team Fact Sheet (if applicable) */}
           {state.teamFactSheets && (
             <div className="p-5 rounded-2xl border border-slate-800 bg-slate-900 shadow-xl space-y-4">
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                 <h3 className="font-bold text-white text-sm flex items-center gap-2">
                   <Key className="w-4 h-4 text-amber-400" />
                   Arkusze Zespołów (Dracula)
                 </h3>
-                {isNegotiator ? (
-                  <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">
-                    Jesteś Wyznaczonym Negocjatorem!
-                  </span>
-                ) : (
-                  <button
-                    type="button"
-                    onClick={() => onDesignateNegotiator(currentUserId)}
-                    className="px-3 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-white border border-slate-700 transition"
-                  >
-                    Zostań Negocjatorem
-                  </button>
-                )}
+                <div className="flex items-center gap-2">
+                  {!isNegotiator && !isHost && state.phase !== "SOLUTION_REVEAL" && state.phase !== "DEBRIEFING" && (
+                    <div className="flex items-center gap-1 bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs">
+                      <button
+                        type="button"
+                        onClick={() => setSelectedDraculaTeam("team-1")}
+                        className={`px-2.5 py-1 rounded-lg font-bold transition ${
+                          selectedDraculaTeam === "team-1"
+                            ? "bg-cyan-500 text-slate-950"
+                            : "text-slate-400 hover:text-white"
+                        }`}
+                      >
+                        Zespół 1
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setSelectedDraculaTeam("team-2")}
+                        className={`px-2.5 py-1 rounded-lg font-bold transition ${
+                          selectedDraculaTeam === "team-2"
+                            ? "bg-amber-500 text-slate-950"
+                            : "text-slate-400 hover:text-white"
+                        }`}
+                      >
+                        Zespół 2
+                      </button>
+                    </div>
+                  )}
+                  {isNegotiator ? (
+                    <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">
+                      Jesteś Wyznaczonym Negocjatorem! (Widzisz oba arkusze)
+                    </span>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => onDesignateNegotiator(currentUserId)}
+                      className="px-3 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-white border border-slate-700 transition"
+                    >
+                      Zostań Negocjatorem
+                    </button>
+                  )}
+                </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {Object.entries(state.teamFactSheets).map(([teamKey, sheet]) => (
-                  <div key={teamKey} className="p-4 rounded-xl bg-slate-950/70 border border-slate-800 space-y-2">
-                    <h4 className="font-bold text-xs text-cyan-300">{sheet.title}</h4>
-                    <ul className="space-y-1.5 text-xs text-slate-300">
-                      {sheet.facts.map((fact, idx) => (
-                        <li key={idx} className="flex items-start gap-2">
-                          <span className="text-cyan-400 font-mono">•</span>
-                          <span>{fact}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
+              <div className={`grid gap-4 ${isNegotiator || isHost || state.phase === "SOLUTION_REVEAL" || state.phase === "DEBRIEFING" ? "grid-cols-1 md:grid-cols-2" : "grid-cols-1"}`}>
+                {Object.entries(state.teamFactSheets)
+                  .filter(([teamKey]) => {
+                    if (isNegotiator || isHost || state.phase === "SOLUTION_REVEAL" || state.phase === "DEBRIEFING") {
+                      return true;
+                    }
+                    const userTeam = players?.[currentUserId]?.breakoutGroupId === "group-2" ? "team-2" : selectedDraculaTeam;
+                    return teamKey === userTeam;
+                  })
+                  .map(([teamKey, sheet]) => (
+                    <div key={teamKey} className="p-4 rounded-xl bg-slate-950/70 border border-slate-800 space-y-2">
+                      <div className="flex items-center justify-between border-b border-slate-800 pb-2">
+                        <h4 className="font-bold text-xs text-cyan-300">{sheet.title}</h4>
+                        <span className="text-[10px] font-mono text-slate-500 uppercase">
+                          {teamKey === "team-1" ? "Drużyna Wschodu" : "Drużyna Zakonu"}
+                        </span>
+                      </div>
+                      <ul className="space-y-1.5 text-xs text-slate-300">
+                        {sheet.facts.map((fact, idx) => (
+                          <li key={idx} className="flex items-start gap-2">
+                            <span className="text-cyan-400 font-mono">•</span>
+                            <span>{fact}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
               </div>
             </div>
           )}

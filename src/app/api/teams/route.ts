@@ -55,6 +55,20 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // Verify user and organization are approved (Superadmin is exempt)
+    if (session.role !== "SUPERADMIN") {
+      const user = await prismaUnscoped.user.findUnique({
+        where: { id: session.sub },
+        include: { organization: true },
+      });
+      if (!user || user.status !== "ACTIVE" || user.organization?.status !== "APPROVED") {
+        return NextResponse.json(
+          { error: "Tylko zatwierdzeni administratorzy zatwierdzonych organizacji mogą tworzyć zespoły." },
+          { status: 403 }
+        );
+      }
+    }
+
     const body = await req.json();
     const { name } = body;
 
