@@ -1,0 +1,260 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Organization {
+  id              String         @id @default(uuid())
+  name            String
+  slug            String         @unique
+  isSystemTenant  Boolean        @default(false)
+  status          String         @default("APPROVED") // PENDING_APPROVAL, APPROVED, REJECTED
+  founderId       String?
+  isPublic        Boolean        @default(true)
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  users           User[]
+  teams           Team[]
+  gameSessions    GameSession[]
+  wordBanks       WordBank[]
+  questionDecks   QuestionDeck[]
+  invitations     Invitation[]
+  membershipRequests MembershipRequest[]
+
+  @@index([slug])
+  @@index([status])
+}
+
+model User {
+  id                 String         @id @default(uuid())
+  email              String         @unique
+  passwordHash       String
+  role               String         @default("TEAM_MEMBER") // SUPERADMIN, ORG_ADMIN, TEAM_FACILITATOR, TEAM_MEMBER
+  status             String         @default("ACTIVE")     // ACTIVE, PENDING_APPROVAL, SUSPENDED
+  mustChangePassword Boolean        @default(false)
+  emailVerified      DateTime?
+  locale             String         @default("pl")
+  organizationId     String
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+
+  organization       Organization   @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  profile            UserProfile?
+  refreshTokens      RefreshToken[]
+  teamMemberships    TeamMember[]
+  hostedSessions     GameSession[]  @relation("SessionHost")
+  scoreRecords       ScoreRecord[]
+  createdInvitations Invitation[]   @relation("CreatedInvitations")
+  membershipRequests MembershipRequest[]
+
+  @@index([email])
+  @@index([organizationId])
+  @@index([status])
+}
+
+model UserProfile {
+  id                 String   @id @default(uuid())
+  userId             String   @unique
+  displayName        String
+  chameleonColor     String   @default("#06B6D4") // Default Cyber Teal
+  chameleonSecondary String   @default("#3B82F6")
+  chameleonAccent    String   @default("#10B981")
+  avatarState        String   @default("idle")
+  updatedAt          DateTime @updatedAt
+
+  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model RefreshToken {
+  id          String   @id @default(uuid())
+  hashedToken String   @unique
+  userId      String
+  revoked     Boolean  @default(false)
+  expiresAt   DateTime
+  createdAt   DateTime @default(now())
+
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model Team {
+  id             String         @id @default(uuid())
+  name           String
+  organizationId String
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  organization   Organization   @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  members        TeamMember[]
+  gameSessions   GameSession[]
+  invitations    Invitation[]
+
+  @@index([organizationId])
+}
+
+model TeamMember {
+  id       String   @id @default(uuid())
+  teamId   String
+  userId   String
+  role     String   @default("TEAM_MEMBER")
+  joinedAt DateTime @default(now())
+
+  team     Team     @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([teamId, userId])
+  @@index([teamId])
+  @@index([userId])
+}
+
+model Invitation {
+  id             String       @id @default(uuid())
+  email          String
+  organizationId String
+  teamId         String?
+  role           String       @default("TEAM_MEMBER")
+  token          String       @unique
+  invitedById    String
+  expiresAt      DateTime
+  acceptedAt     DateTime?
+  createdAt      DateTime     @default(now())
+
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  team           Team?        @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  invitedBy      User         @relation("CreatedInvitations", fields: [invitedById], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@index([token])
+}
+
+model MembershipRequest {
+  id             String       @id @default(uuid())
+  userId         String
+  organizationId String
+  status         String       @default("PENDING") // PENDING, APPROVED, REJECTED
+  message        String?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  reviewedById   String?
+
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, organizationId])
+  @@index([organizationId, status])
+  @@index([userId])
+}
+
+model GameSession {
+  id              String         @id @default(uuid())
+  roomCode        String         @unique
+  organizationId  String
+  teamId          String?
+  hostId          String
+  currentGameType String         @default("RYSOWANIE") // RYSOWANIE, TWO_TRUTHS, THIS_OR_THAT, etc.
+  status          String         @default("LOBBY")     // LOBBY, ACTIVE, PAUSED, COMPLETED
+  settings        Json
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  organization    Organization   @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  team            Team?          @relation(fields: [teamId], references: [id], onDelete: SetNull)
+  host            User           @relation("SessionHost", fields: [hostId], references: [id])
+  drawingActions  DrawingAction[]
+  scoreRecords    ScoreRecord[]
+  bingoTiles      BingoTile[]
+
+  @@index([roomCode])
+  @@index([organizationId])
+}
+
+model DrawingAction {
+  id          String      @id @default(uuid())
+  sessionId   String
+  roundNumber Int
+  turnNumber  Int
+  drawerId    String
+  actionType  String      // STROKE, FILL, CLEAR
+  payload     Json
+  createdAt   DateTime    @default(now())
+
+  session     GameSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@index([sessionId, roundNumber, turnNumber])
+}
+
+model WordBank {
+  id             String       @id @default(uuid())
+  organizationId String
+  name           String
+  locale         String       @default("pl")
+  category       String
+  difficulty     String
+  words          Json         // Stored as JSON array: ["kameleon", "rakieta"]
+  isGlobal       Boolean      @default(false)
+  createdAt      DateTime     @default(now())
+
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId, locale])
+}
+
+model QuestionDeck {
+  id             String       @id @default(uuid())
+  organizationId String
+  gameType       String
+  name           String
+  locale         String       @default("pl")
+  items          Json         // Array of localized dilemma/question objects
+  isGlobal       Boolean      @default(false)
+  createdAt      DateTime     @default(now())
+
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId, gameType, locale])
+}
+
+model ScoreRecord {
+  id        String      @id @default(uuid())
+  sessionId String
+  userId    String?
+  guestName String?
+  gameType  String
+  points    Int         @default(0)
+  createdAt DateTime    @default(now())
+
+  session   GameSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  user      User?       @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([sessionId, gameType])
+}
+
+model BingoTile {
+  id             String      @id @default(uuid())
+  sessionId      String
+  participantId  String
+  row            Int
+  col            Int
+  traitText      String
+  verifiedByPeer String?
+  isCompleted    Boolean     @default(false)
+  createdAt      DateTime    @default(now())
+
+  session        GameSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@unique([sessionId, participantId, row, col])
+  @@index([sessionId, participantId])
+}
+
+model SystemConfig {
+  key       String   @id
+  value     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

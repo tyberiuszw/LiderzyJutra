@@ -1,0 +1,32 @@
+[
+  {
+    "category": "animals",
+    "difficulty": "EASY",
+    "words": ["kot", "pies", "ptak", "ryba", "koń", "żaba", "lew", "wilk", "kura", "słoń", "małpa", "kameleon", "motyl", "pingwin", "żyrafa"]
+  },
+  {
+    "category": "everyday",
+    "difficulty": "EASY",
+    "words": ["dom", "auto", "okno", "drzwi", "zegar", "but", "chleb", "woda", "las", "stół", "plecak", "okulary", "książka", "lampa", "parasol"]
+  },
+  {
+    "category": "actions",
+    "difficulty": "MEDIUM",
+    "words": ["taniec", "pływanie", "bieganie", "gotowanie", "czytanie", "spanie", "malowanie", "śpiewanie", "wspinaczka", "żonglerka"]
+  },
+  {
+    "category": "tech",
+    "difficulty": "MEDIUM",
+    "words": ["rakieta", "laptop", "smartfon", "gitara", "satelita", "bateria", "mikrofon", "klawiatura", "dron", "słuchawki", "teleskop"]
+  },
+  {
+    "category": "leadership",
+    "difficulty": "HARD",
+    "words": ["burza mózgów", "współpraca", "kompas", "inicjatywa", "dialog", "porozumienie", "odpowiedzialność", "synergia", "prezentacja"]
+  },
+  {
+    "category": "ai_future",
+    "difficulty": "HARD",
+    "words": ["sztuczna inteligencja", "algorytm", "cyberbezpieczeństwo", "robotyka", "innowacja", "przyszłość", "sieć neuronowa", "awatar"]
+  }
+]

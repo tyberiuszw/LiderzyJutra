@@ -1,0 +1,172 @@
+{
+  "two_truths": {
+    "themes": [
+      "Unusual travel adventures and childhood stories",
+      "Hidden talents and unique hobbies",
+      "Funny school or university blunders",
+      "Encounters with celebrities",
+      "Pets and their quirky habits",
+      "Favorite or most hated food and dishes",
+      "The weirdest impulse purchases ever made",
+      "Secret passions or dreams nobody knows about"
+    ],
+    "examples": [
+      {
+        "statements": [
+          "I went skydiving at the age of 16",
+          "I got lost in the Rome airport overnight",
+          "I have never drunk a cup of coffee in my life"
+        ],
+        "lieIndex": 0
+      },
+      {
+        "statements": [
+          "I can solve a Rubik's cube in under a minute",
+          "I won a national youth recitation championship",
+          "I have a pet iguana named Sigmund"
+        ],
+        "lieIndex": 2
+      }
+    ]
+  },
+  "this_or_that": [
+    { "id": "tot-1", "category": "tech", "optionA": "100% remote teamwork", "optionB": "Daily in-person office meetings" },
+    { "id": "tot-2", "category": "tech", "optionA": "AI copilot advisor", "optionB": "Pure human intuition" },
+    { "id": "tot-3", "category": "tech", "optionA": "Deep focus in headphones", "optionB": "Energetic whiteboard brainstorming" },
+    { "id": "tot-4", "category": "lifestyle", "optionA": "Early bird start at 6:00 AM", "optionB": "Night owl coding until 3:00 AM" },
+    { "id": "tot-5", "category": "lifestyle", "optionA": "Drip specialty coffee", "optionB": "Green tea / Yerba Mate" },
+    { "id": "tot-6", "category": "leadership", "optionA": "Fast decision with calculated risk", "optionB": "Long deliberation and consensus" },
+    { "id": "tot-7", "category": "leadership", "optionA": "Leading the team from the front", "optionB": "Specialist solving hard problems behind the scenes" },
+    { "id": "tot-8", "category": "humor", "optionA": "Travel 100 years into the past", "optionB": "Leap 100 years into the future" },
+    { "id": "tot-9", "category": "humor", "optionA": "Ability to fly", "optionB": "Invisibility on command" },
+    { "id": "tot-10", "category": "lifestyle", "optionA": "Cabin retreat weekend offline", "optionB": "Tech festival hackathon weekend" }
+  ],
+  "story_chain": {
+    "starters": [
+      "Year 2045. In the basement of an old university library, young engineers uncovered a mysterious terminal displaying a glowing green chameleon...",
+      "During a midnight hackathon at 3:15 AM, the lights suddenly cut out and the only active laptop screen flashed an encrypted warning...",
+      "Our team expedition reached the edge of an uncharted valley where compass needles began spinning wildly in reverse...",
+      "Day one of the space research internship began with an emergency alert: the automated system locked down all exits..."
+    ],
+    "wildcards": [
+      "PLOT TWIST: A team member abruptly reveals that they planned this entire mystery from the start!",
+      "PLOT TWIST: A sparkling aircraft glides overhead, broadcasting the team's favorite theme song!",
+      "PLOT TWIST: Time rewinds by exactly 10 minutes and everyone clearly remembers what just occurred!",
+      "PLOT TWIST: The chameleon on screen speaks with a distinct human voice and a robotic accent!",
+      "PLOT TWIST: The key to solving the entire puzzle was resting in the pocket of the quietest person!"
+    ]
+  },
+  "hot_seat": {
+    "tier1_fun": [
+      "What is the most embarrassing guilty-pleasure song you know by heart?",
+      "If you could have dinner with any fictional character, who would it be?",
+      "What is your biggest internet guilty pleasure rabbit hole?",
+      "What was your funniest spontaneous impulse purchase?",
+      "If you were reincarnated as an animal, which species and why?",
+      "What was your absolute favorite childhood video game or board game?",
+      "What meal can you completely not cook without burning it?",
+      "Which movie could you rewatch dozens of times without getting bored?"
+    ],
+    "tier2_values": [
+      "What event in recent years shifted your perspective on life the most?",
+      "What matters most to you in deep friendship and mutual trust?",
+      "How do you regain calm and composure when everything goes wrong?",
+      "Who is your greatest role model in daily life?",
+      "What was the toughest and most valuable lesson failure taught you?",
+      "What trait in other people inspires you the most, and what turns you off?",
+      "Which core personal value is completely non-negotiable for you?",
+      "What are you most grateful for to your current team?"
+    ],
+    "tier3_leadership": [
+      "In your opinion, what distinguishes a true inspiring leader from a boss?",
+      "How do you make tough calls when not everyone on the team agrees?",
+      "What is your biggest unspoken fear when leading youth projects?",
+      "How do you recharge and motivate others when your own energy runs low?",
+      "What leadership mistake did you make in the past and what did it teach you?",
+      "What kind of future do you want to build for your generation?",
+      "When was the last time you openly admitted an error in front of a group?",
+      "What does courageous civic action mean to you personally?"
+    ]
+  },
+  "quiz_superlatives": [
+    "Who on the team is the first to test every new AI tool?",
+    "Who on the team always remembers everyone's birthdays and milestones?",
+    "Who stays cool and collected in the middle of project chaos?",
+    "Who could write the best bestselling sci-fi novel?",
+    "Who breaks team tension fastest with a well-timed joke?",
+    "Who gets the most done during the midnight crunch before a deadline?",
+    "Who could convince anyone of any idea through charismatic negotiation?",
+    "Who keeps the most impeccably organized notes, files, and dashboards?",
+    "Who is destined to become a minister of innovation or future leader?",
+    "Who is always the first to raise their hand for challenging tasks?",
+    "Who drops the wildest and most creative ideas during brainstorming?",
+    "Who brews the best artisan coffee or tea for team sessions?",
+    "Who is the eternal optimist who lifts everyone's spirits?",
+    "Who can distill the most complex technical concept into three simple sentences?",
+    "Who secretly masters the most unexpected and quirky skills?"
+  ],
+  "human_bingo": {
+    "traits": [
+      "Speaks fluently in at least three languages",
+      "Has written their own software code or built a website",
+      "Can play at least three chords on a guitar or ukulele",
+      "Woke up before 6:30 AM this morning",
+      "Has visited at least 5 different countries",
+      "Has read more than 10 books this year",
+      "Has a pet dog or cat at home",
+      "Actively volunteers or participates in youth councils",
+      "Has never watched a single episode of Game of Thrones",
+      "Can solve a 3x3 Rubik's cube",
+      "Enjoys pineapple on pizza",
+      "Regularly exercises or trains martial arts",
+      "Hosts a podcast, blog, or video channel",
+      "Has spent a night camping under the stars in a forest",
+      "Knows the periodic table (or a large chunk) from memory",
+      "Can bake a cake from scratch without consulting a recipe",
+      "Uses Linux or a command-line terminal daily",
+      "Has completed a marathon or obstacle course race",
+      "Does not drink coffee or energy drinks",
+      "Can whistle loudly using their fingers",
+      "Is currently learning sign language or Japanese",
+      "Collects vinyl records, comic books, or LEGO sets",
+      "Rides a skateboard, rollerblades, or unicycle",
+      "Has participated in an Erasmus+ youth exchange",
+      "Can juggle three or more balls easily",
+      "Has worked as a barista or hospitality server",
+      "Prefers strategic tabletop board games over video games",
+      "Holds a driver's license and enjoys road trips",
+      "Has attended a live music concert abroad",
+      "Can sketch a humorous caricature in 30 seconds",
+      "Starts every morning with a glass of lemon water",
+      "Uses dark theme on every single app and screen",
+      "Loves waking up early to watch the sunrise",
+      "Has a passion for astronomy and stargazing",
+      "Has won a tournament in chess or esports",
+      "Can identify at least 10 species of local birds",
+      "Built their own desktop computer from components",
+      "Enjoys cold plunge baths or winter swimming",
+      "Keeps a handwritten daily journal or paper planner",
+      "Has participated in an Oxford-style formal debate",
+      "Shoots photos on analog 35mm film cameras",
+      "Has three or more siblings in their family",
+      "Can pull a perfect espresso shot with latte art",
+      "Has performed on a theater stage or acted in a play",
+      "Loves cooking family-style meals for the whole team",
+      "Enjoys walking through the city without headphones",
+      "Has never broken a single bone in their body",
+      "Knows keyboard shortcuts for everything in their OS",
+      "Cultivates a thriving jungle of indoor plants",
+      "Has powered through an all-night 24h hackathon",
+      "Enjoys solving 1000+ piece jigsaw puzzles",
+      "Plays in a musical band, choir, or orchestra",
+      "Watches science and historical documentaries for fun",
+      "Always carries a charged power bank everywhere",
+      "Can repair a bicycle chain or replace a flat tire",
+      "Loves reading and debating ancient history",
+      "Wears colorful or intentionally mismatched socks",
+      "Invents their own games or quizzes for friends",
+      "Dreams of a round-the-world campervan road trip",
+      "Can name every member of the current team from memory"
+    ]
+  }
+}

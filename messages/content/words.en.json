@@ -1,0 +1,32 @@
+[
+  {
+    "category": "animals",
+    "difficulty": "EASY",
+    "words": ["cat", "dog", "bird", "fish", "horse", "frog", "lion", "wolf", "hen", "elephant", "monkey", "chameleon", "butterfly", "penguin", "giraffe"]
+  },
+  {
+    "category": "everyday",
+    "difficulty": "EASY",
+    "words": ["house", "car", "window", "door", "clock", "shoe", "bread", "water", "forest", "table", "backpack", "glasses", "book", "lamp", "umbrella"]
+  },
+  {
+    "category": "actions",
+    "difficulty": "MEDIUM",
+    "words": ["dancing", "swimming", "running", "cooking", "reading", "sleeping", "painting", "singing", "climbing", "juggling"]
+  },
+  {
+    "category": "tech",
+    "difficulty": "MEDIUM",
+    "words": ["rocket", "laptop", "smartphone", "guitar", "satellite", "battery", "microphone", "keyboard", "drone", "headphones", "telescope"]
+  },
+  {
+    "category": "leadership",
+    "difficulty": "HARD",
+    "words": ["brainstorming", "collaboration", "compass", "initiative", "dialogue", "consensus", "responsibility", "synergy", "presentation"]
+  },
+  {
+    "category": "ai_future",
+    "difficulty": "HARD",
+    "words": ["artificial intelligence", "algorithm", "cybersecurity", "robotics", "innovation", "future", "neural network", "avatar"]
+  }
+]

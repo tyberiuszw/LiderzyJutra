@@ -1,0 +1,172 @@
+{
+  "two_truths": {
+    "themes": [
+      "Niezwykłe podróże i przygody z dzieciństwa",
+      "Ukryte talenty i nietypowe hobby",
+      "Śmieszne wpadki w szkole lub na studiach",
+      "Spotkania ze znanymi osobami",
+      "Zwierzęta domowe i ich szalone zwyczaje",
+      "Ulubione lub najbardziej znienawidzone potrawy",
+      "Najdziwniejsze rzeczy, jakie kiedykolwiek kupiłeś",
+      "Projekty lub marzenia, o których nikt nie wie"
+    ],
+    "examples": [
+      {
+        "statements": [
+          "Skoczyłem ze spadochronem w wieku 16 lat",
+          "Zgubiłem się kiedyś na lotnisku w Rzymie",
+          "Nigdy w życiu nie piłem kawy"
+        ],
+        "lieIndex": 0
+      },
+      {
+        "statements": [
+          "Potrafię ułożyć kostkę Rubika w mniej niż minutę",
+          "Wygrałem ogólnopolski konkurs recytatorski",
+          "Mam w domu legwana o imieniu Zygmunt"
+        ],
+        "lieIndex": 2
+      }
+    ]
+  },
+  "this_or_that": [
+    { "id": "tot-1", "category": "tech", "optionA": "Praca w 100% zdalna", "optionB": "Codzienne spotkania w biurze" },
+    { "id": "tot-2", "category": "tech", "optionA": "Sztuczna inteligencja jako doradca", "optionB": "Tylko ludzka intuicja" },
+    { "id": "tot-3", "category": "tech", "optionA": "Praca w ciszy i słuchawkach", "optionB": "Głośna burza mózgów przy tablicy" },
+    { "id": "tot-4", "category": "lifestyle", "optionA": "Poranny start o 6:00 rano", "optionB": "Nocne kodowanie do 3:00 w nocy" },
+    { "id": "tot-5", "category": "lifestyle", "optionA": "Kawa przelewowa", "optionB": "Zielona herbata / Yerba Mate" },
+    { "id": "tot-6", "category": "leadership", "optionA": "Szybka decyzja z ryzykiem błędu", "optionB": "Długa analiza i jednomyślność" },
+    { "id": "tot-7", "category": "leadership", "optionA": "Dowodzenie całym zespołem", "optionB": "Ekspert od trudnych zadań w cieniu" },
+    { "id": "tot-8", "category": "humor", "optionA": "Cofnąć się o 100 lat w przeszłość", "optionB": "Skoczyć o 100 lat w przyszłość" },
+    { "id": "tot-9", "category": "humor", "optionA": "Umiejętność latania", "optionB": "Niewidzialność na życzenie" },
+    { "id": "tot-10", "category": "lifestyle", "optionA": "Weekend w górskim domku offline", "optionB": "Weekend na festiwalu technologicznym" }
+  ],
+  "story_chain": {
+    "starters": [
+      "Rok 2045. W podziemiach starej warszawskiej biblioteki zespół młodych inżynierów odkrył przedziwny terminal, na którego ekranie mrugał zielony kameleon...",
+      "Podczas nocnego hackathonu o 3:15 nagle w całym budynku zgasło światło, a na jedynym działającym laptopie pojawił się tajemniczy komunikat...",
+      "Nasza ekspedycja dotarła na skraj nieznanej doliny w Tatrach, gdzie kompasy zaczęły obracać się w przeciwnym kierunku...",
+      "Pierwszy dzień stażu w kosmicznym centrum badawczym zaczął się od alarmu: sztuczna inteligencja zamknęła wszystkie wyjścia..."
+    ],
+    "wildcards": [
+      "ZWROT AKCJI: Jeden z członków zespołu nagle przyznaje się, że to on zaplanował całe to zamieszanie!",
+      "ZWROT AKCJI: Na niebie pojawia się lśniący statek kosmiczny, z którego wydobywa się dźwięk ulubionej piosenki drużyny!",
+      "ZWROT AKCJI: Czas cofa się o dokładnie 10 minut i wszyscy pamiętają, co się stało!",
+      "ZWROT AKCJI: Kameleon na ekranie nagle przemawia ludzkim głosem z dziwnym akcentem!",
+      "ZWROT AKCJI: Okazuje się, że klucz do rozwiązania zagadki był cały czas w kieszeni najcichszej osoby w zespole!"
+    ]
+  },
+  "hot_seat": {
+    "tier1_fun": [
+      "Jaka jest najbardziej żenująca piosenka, którą znasz na pamięć?",
+      "Gdybyś mógł zjeść obiad z dowolną postacią fikcyjną, kto by to był?",
+      "Co jest Twoim największym 'guilty pleasure' w internecie?",
+      "Jaki był Twój najśmieszniejszy zakup pod wpływem impulsu?",
+      "Gdybyś był zwierzakiem, jakim gatunkiem i dlaczego?",
+      "Jaka jest Twoja ulubiona gra z dzieciństwa?",
+      "Czego kompletnie nie potrafisz ugotować?",
+      "Jaki film możesz oglądać bez końca?"
+    ],
+    "tier2_values": [
+      "Jakie wydarzenie z ostatnich lat najbardziej zmieniło Twój sposób myślenia?",
+      "Co jest dla Ciebie najważniejsze w przyjaźni i zaufaniu?",
+      "Jak radzisz sobie ze stresem, gdy wszystko idzie nie tak?",
+      "Kto jest Twoim największym autorytetem w życiu codziennym?",
+      "Jaka była najtrudniejsza lekcja, jakiej nauczyła Cię porażka?",
+      "Co w ludziach najbardziej Cię inspiruje, a co zniechęca?",
+      "Jaka wartość jest dla Ciebie nienegocjowalna?",
+      "Za co jesteś najbardziej wdzięczny swojemu zespołowi?"
+    ],
+    "tier3_leadership": [
+      "Co według Ciebie odróżnia prawdziwego lidera od zwykłego szefa?",
+      "Jak podejmujesz decyzje, kiedy nie wszyscy w zespole się z Tobą zgadzają?",
+      "Jaki jest Twój największy lęk związany z prowadzeniem projektów?",
+      "W jaki sposób motywujesz innych, gdy sam tracisz energię?",
+      "Jaki błąd przywódczy popełniłeś w przeszłości i czego Cię nauczył?",
+      "Jaką przyszłość chcesz budować dla swojego pokolenia?",
+      "Kiedy ostatnio musiałeś przyznać się do błędu przed grupą?",
+      "Czym dla Ciebie jest odwaga w działaniu społecznym?"
+    ]
+  },
+  "quiz_superlatives": [
+    "Kto w zespole pierwszy przetestuje nowe narzędzie AI?",
+    "Kto w zespole zawsze pamięta o urodzinach innych?",
+    "Kto potrafi zachować spokój w największym chaosie projektowym?",
+    "Kto napisałby najlepszą książkę science-fiction?",
+    "Kto najszybciej rozładowuje napięcie dobrym żartem?",
+    "Kto w nocy przed deadline'em zrobi najwięcej zadań?",
+    "Kto najlepiej negocjuje i przekona każdego do swojego pomysłu?",
+    "Kto ma zawsze najlepiej zorganizowane notatki i pliki?",
+    "Kto zostanie w przyszłości prezydentem lub ministrem innowacji?",
+    "Kto pierwszy zgłasza się na ochotnika do trudnych wyzwań?",
+    "Kto ma najbardziej kreatywne pomysły na burzy mózgów?",
+    "Kto parzy najlepszą kawę lub herbatę podczas spotkań?",
+    "Kto jest największym optymistą w całej drużynie?",
+    "Kto potrafi wyjaśnić skomplikowane rzeczy w 3 prostych zdaniach?",
+    "Kto w tajemnicy uczy się najdziwniejszych umiejętności?"
+  ],
+  "human_bingo": {
+    "traits": [
+      "Mówi płynnie w co najmniej trzech językach",
+      "Kiedykolwiek napisał własny program lub stronę www",
+      "Potrafi zagrać co najmniej 3 akordy na gitarze lub ukulele",
+      "Wstał dzisiaj przed godziną 6:30 rano",
+      "Był w co najmniej 5 różnych krajach",
+      "Przeczytał w tym roku więcej niż 10 książek",
+      "Ma w domu psa lub kota",
+      "Bierze udział w wolontariacie lub samorządzie",
+      "Nigdy nie oglądał ani jednego odcinka Gry o Tron",
+      "Potrafi ułożyć kostkę Rubika",
+      "Lubi ananasa na pizzy",
+      "Uprawia regularnie sport lub trenuje sztuki walki",
+      "Prowadzi podcast, bloga lub kanał wideo",
+      "Kiedykolwiek spał pod namiotem w lesie",
+      "Zna na pamięć układ okresowy pierwiastków (lub fragment)",
+      "Potrafi upiec ciasto od zera bez przepisu",
+      "Używa linuksa lub terminala na co dzień",
+      "Brał udział w maratonie lub biegu z przeszkodami",
+      "Nie pije kawy ani napojów energetycznych",
+      "Potrafi gwizdać na palcach",
+      "Uczy się języka migowego lub japońskiego",
+      "Ma kolekcję winyli, komiksów lub klocków LEGO",
+      "Jeździ na deskorolce, rolkach lub monocyklu",
+      "Brał udział w wymianie młodzieżowej Erasmus+",
+      "Potrafi żonglować co najmniej trzema piłeczkami",
+      "Pracował kiedyś jako barista lub kelner",
+      "Kocha planszówki strategiczne bardziej niż gry wideo",
+      "Ma prawo jazdy i lubi prowadzić auto",
+      "Był na koncercie muzycznym za granicą",
+      "Potrafi narysować karykaturę w 30 sekund",
+      "Rano najpierw pije szklankę wody z cytryną",
+      "Używa ciemnego motywu we wszystkich aplikacjach",
+      "Lubi wstawać wcześnie na wschód słońca",
+      "Ma pasję do astronomii lub obserwacji gwiazd",
+      "Kiedykolwiek wygrał turniej szachowy lub e-sportowy",
+      "Potrafi rozpoznać co najmniej 10 gatunków ptaków",
+      "Samodzielnie złożył swój komputer",
+      "Lubi pływać w zimnej wodzie lub morsować",
+      "Prowadzi dziennik lub planner papierowy",
+      "Brał udział w debacie oksfordzkiej",
+      "Kocha fotografię analogową",
+      "Ma więcej niż 3 rodzeństwa",
+      "Potrafi zrobić idealne espresso lub latte art",
+      "Kiedykolwiek wystąpił w teatrze lub na scenie",
+      "Kocha gotować dla całego zespołu",
+      "Często spaceruje bez słuchawek, by posłuchać miasta",
+      "Nigdy nie złamał żadnej kości",
+      "Zna skróty klawiszowe do wszystkiego w systemie",
+      "Kolekcjonuje rośliny doniczkowe w pokoju",
+      "Brał udział w hackathonie przez całą noc",
+      "Lubi puzzle o liczbie elementów 1000+",
+      "Gra w zespole muzycznym lub chórze",
+      "Ogląda filmy dokumentalne w wolnym czasie",
+      "Zawsze ma przy sobie naładowany powerbank",
+      "Potrafi wymienić koło w rowerze lub samochodzie",
+      "Lubi uczyć się historii starożytnej",
+      "Nosi kolorowe, nie do pary skarpetki",
+      "Wymyśla własne gry lub quizy dla znajomych",
+      "Marzy o podróży dookoła świata kamperem",
+      "Potrafi wymienić wszystkich członków obecnego zespołu z pamięci"
+    ]
+  }
+}

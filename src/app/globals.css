@@ -1,0 +1,101 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------
+   Design tokens — Team Bonding Liderzy Jutra
+   Light is the default; dark is enabled via <html data-theme="dark">.
+   --chameleon-* variables are injected at runtime by ThemeProvider.
+------------------------------------------------------------------- */
+:root,
+:root[data-theme="light"] {
+  --page-bg: #f8fafc;
+  --surface-card: #ffffff;
+  --surface-secondary: #f1f5f9;
+  --surface-hover: #e2e8f0;
+  --border-subtle: #e2e8f0;
+  --border-strong: #cbd5e1;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.08), 0 2px 4px -2px rgba(15, 23, 42, 0.04);
+  --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.03);
+
+  --color-brand-cyan: #06b6d4;
+  --color-brand-indigo: #4f46e5;
+  --color-accent-coral: #ff6b4a;
+  --color-accent-green: #10b981;
+  --color-accent-gold: #f59e0b;
+
+  /* Fallbacks until ThemeProvider injects the user's palette. */
+  --chameleon-primary: #06b6d4;
+  --chameleon-secondary: #3b82f6;
+  --chameleon-accent: #10b981;
+  --chameleon-primary-contrast: #0f172a;
+  --chameleon-primary-glow: rgba(6, 182, 212, 0.35);
+  --chameleon-text: #088395;
+}
+
+:root[data-theme="dark"] {
+  --page-bg: #0b0f19;
+  --surface-card: #151d2f;
+  --surface-secondary: #1e293b;
+  --surface-hover: #28354d;
+  --border-subtle: #1e293b;
+  --border-strong: #334155;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.6);
+  color-scheme: dark;
+}
+
+/* Expose tokens to Tailwind utilities (bg-page, text-primary, ...). */
+@theme inline {
+  --color-page: var(--page-bg);
+  --color-card: var(--surface-card);
+  --color-secondary-surface: var(--surface-secondary);
+  --color-hover-surface: var(--surface-hover);
+  --color-line: var(--border-subtle);
+  --color-line-strong: var(--border-strong);
+  --color-ink: var(--text-primary);
+  --color-ink-soft: var(--text-secondary);
+  --color-ink-muted: var(--text-muted);
+  --color-cham: var(--chameleon-primary);
+  --color-cham-2: var(--chameleon-secondary);
+  --color-cham-3: var(--chameleon-accent);
+  --color-cham-contrast: var(--chameleon-primary-contrast);
+  --color-cham-text: var(--chameleon-text);
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+html {
+  background: var(--page-bg);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+body {
+  min-height: 100dvh;
+  -webkit-font-smoothing: antialiased;
+}
+
+.tabular {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+:focus-visible {
+  outline: 2px solid var(--chameleon-primary);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
