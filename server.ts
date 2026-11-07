@@ -14,7 +14,7 @@ import next from "next";
 import { initSocketServer } from "./src/server/socket-server";
 
 const dev = process.env.NODE_ENV !== "production";
-const hostname = process.env.HOSTNAME || "localhost";
+const hostname = process.env.HOSTNAME || (dev ? "localhost" : "0.0.0.0");
 const port = parseInt(process.env.PORT || "3000", 10);
 
 const app = next({ dev, hostname, port });
@@ -35,8 +35,8 @@ app
     // Attach Socket.io to the exact same HTTP server instance
     initSocketServer(httpServer);
 
-    httpServer.listen(port, () => {
-      console.log(`> [TeamBonding Liderzy Jutra] Unified server ready on http://${hostname}:${port}`);
+    httpServer.listen(port, "0.0.0.0", () => {
+      console.log(`> [TeamBonding Liderzy Jutra] Unified server ready on http://0.0.0.0:${port}`);
     });
   })
   .catch((err) => {
