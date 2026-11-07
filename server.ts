@@ -10,12 +10,25 @@
 
 import { createServer } from "node:http";
 import { parse } from "node:url";
+import fs from "node:fs";
+import path from "node:path";
 import next from "next";
 import { initSocketServer } from "./src/server/socket-server";
 
-const dev = process.env.NODE_ENV !== "production";
-const hostname = process.env.HOSTNAME || (dev ? "localhost" : "0.0.0.0");
+// Fallback environment variables for cloud deployments
+if (!process.env.DATABASE_URL) {
+  process.env.DATABASE_URL = "postgresql://postgres.zdcmmrtxsbilegurlhbd:Cn4Ad%40W8Ey5Ymvm@aws-0-eu-west-2.pooler.supabase.com:5432/postgres";
+}
+if (!process.env.JWT_SECRET) {
+  process.env.JWT_SECRET = "liderzy-jutra-production-secret-jwt-key-32-chars-min";
+}
+
+const hasBuildId = fs.existsSync(path.join(process.cwd(), ".next", "BUILD_ID"));
+const dev = process.env.NODE_ENV !== "production" && !hasBuildId;
+const hostname = "0.0.0.0";
 const port = parseInt(process.env.PORT || "3000", 10);
+
+console.log(`> [TeamBonding] Starting unified server on port ${port} (mode: ${dev ? "development" : "production"}, hasBuildId: ${hasBuildId})...`);
 
 const app = next({ dev, hostname, port });
 const handle = app.getRequestHandler();
